@@ -1,28 +1,30 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <container />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import container from "./Form/container.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    HelloWorld
+    container
   }
-}
+};
 </script>
 
-<style>
+<style lang="scss">
+@import "@/styles/_reset.scss";
+@import "@/styles/_mixin.scss";
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: #f9fafc;
+  height: 100vh;
+  width: 100vw;
+  @include onTablet {
+    height: 100%;
+  }
 }
 </style>
