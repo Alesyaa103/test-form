@@ -21,6 +21,11 @@ button {
   line-height: 16px;
   color: rgba(0, 0, 0, 0.849);
   margin-left: 70%;
+  background: linear-gradient(#F3AE0F, #E38916) #E38916;
+  outline: none;
+  &:hover{
+    background: linear-gradient(#e2a814, #9c630e) #f5ae00;
+  }
   @include onPhone {
     margin: 0 calc(50% - 60px);
   }

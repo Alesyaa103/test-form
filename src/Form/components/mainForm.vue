@@ -1,14 +1,13 @@
 <template>
   <fieldset>
-    <burger :changeForm="changeForm" />
     <textarea
       type="text"
       placeholder="Add information about yourself"
       v-model="user.info"
+      ref="textarea"
       @input="checkHeight"
       :style="autoSize"
-      ref="textarea"
-      id="autoSize"
+
     />
     <input
       type="text"
@@ -41,6 +40,7 @@
       <option>Yes</option>
       <option>No</option>
     </select>
+    <burger :changeForm="changeForm" />
   </fieldset>
 </template>
 
@@ -73,7 +73,8 @@ export default {
         info: ""
       },
       shipping: "",
-      height: "16px",
+      height: "",
+      H: 0
     };
   },
   validations: {
@@ -105,9 +106,9 @@ export default {
     },
     checkHeight() {
       this.height = "auto";
-      
+      this.H = this.$refs.textarea.scrollHeight;
       this.$nextTick(() => {
-        let newHeight = this.$refs.textarea.scrollHeight - 12;
+        let newHeight = this.$refs.textarea.scrollHeight + 1;
         this.height = newHeight + "px";
       });
     }
@@ -116,7 +117,7 @@ export default {
     autoSize() {
       return {
         height: this.height,
-        overflow: 'auto'
+        overflow: "auto"
       };
     }
   }
@@ -127,12 +128,17 @@ export default {
 @import "@/styles/_mixin.scss";
 fieldset {
   position: relative;
+  height: auto;
   .burger {
     position: absolute;
     right: -24px;
+    top: 0px;
     @include onTablet {
-      bottom: -8px;
+      // bottom: -8px;
+      // right: 0px;
+      position: relative;
       right: 0px;
+      margin: 5px auto;
     }
   }
 }
@@ -144,9 +150,5 @@ fieldset {
   font-weight: normal;
   letter-spacing: 0.28px;
   line-height: 16px;
-}
-#autoSize {
-  overflow-y: hidden;
-  height: auto;
 }
 </style>

@@ -16,6 +16,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 @import "@/styles/_reset.scss";
 @import "@/styles/_mixin.scss";
 
@@ -23,6 +24,9 @@ export default {
   background-color: #f9fafc;
   height: 100vh;
   width: 100vw;
+  position: absolute;
+  bottom: 0px;
+  top: 0px;
   @include onTablet {
     height: 100%;
   }

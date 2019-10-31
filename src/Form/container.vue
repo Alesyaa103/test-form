@@ -1,12 +1,12 @@
 <template>
   <div class="wraper">
-    <header>
+    <header class="header">
       <img src="../assets/orange.png" />
       <p>This is my test task</p>
     </header>
-    <form>
+    <form class="form">
       <mainForm :onChangeForm="onChangeForm" :onShipping="onShipping" />
-      <additionalForm v-if="statusForm" :class="{isActive: shipping}" />
+      <additionalForm v-if="statusForm" :class="{isActive: !shipping}" />
     </form>
     <sendButton />
   </div>
@@ -55,7 +55,7 @@ export default {
   }
 }
 
-header {
+.header {
   border-bottom: 2px solid #dbb407;
   height: calc(10%-20px);
   display: flex;
@@ -81,54 +81,88 @@ header {
   }
 }
 
-form {
+.form {
   display: flex;
   width: 90%;
   margin: 2% auto;
-  justify-content: space-evenly;
+  justify-content: space-between;
   position: relative;
   align-self: auto;
 
   @include onTablet {
     display: block;
   }
-}
 
-fieldset {
-  width: 45%;
-  display: flex;
-  @include onTablet {
-    margin: 0 auto;
-  }
-  @include onPhone {
-    width: 100%;
-  }
-  & input,
-  select,
-  textarea {
-    display: block;
-    width: calc(100% - 24px);
-    height: 16px;
-    flex-direction: column;
-    margin: 6% 0;
-    padding: 6px 10px;
-    border: 2px solid #f0e6b8;
-    background: #f6f6f6;
-    border-radius: 8px;
-    outline: none;
-    color: rgba(0, 0, 0, 0.849);
-    font-family: "Roboto", sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: normal;
-    letter-spacing: 0.28px;
-    line-height: 16px;
-    resize: none;
-    max-height: 102px;
-    &:focus {
-      box-shadow: 0 0 6px 1px #dbb407;
+  fieldset {
+    width: 45%;
+    display: flex;
+    @include onTablet {
+      margin: 0 auto;
     }
-    &::placeholder {
+    @include onPhone {
+      width: 100%;
+    }
+    & input,
+    select,
+    textarea {
+      display: block;
+      width: 100%;
+      height: 16px;
+      flex-direction: column;
+      margin: 6% 0;
+      padding: 6px 10px;
+      border: 2px solid #f0e6b8;
+      background: #f6f6f6;
+      border-radius: 8px;
+      outline: none;
+      color: rgba(0, 0, 0, 0.849);
+      font-family: "Roboto", sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: normal;
+      letter-spacing: 0.28px;
+      line-height: 16px;
+      resize: none;
+      max-height: 102px;
+      box-sizing: content-box;
+
+      &:focus {
+        box-shadow: 0 0 6px 1px #dbb407;
+      }
+      &::placeholder {
+        color: rgba(135, 144, 167, 0.57);
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: normal;
+        letter-spacing: 0.28px;
+        line-height: 16px;
+      }
+    }
+    & select {
+      width: 100%;
+      height: 16px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none; /* remove default arrow */
+      background-image: url(../assets/Shape.svg);
+      background-repeat: no-repeat;
+      background-position: right 17px top 14px;
+      margin-top: 5px;
+      margin-bottom: calc(6% - 21px);
+      & option {
+        background-color: inherit;
+
+        &:hover {
+          background-color: #dbb407;
+        }
+      }
+    }
+    & select::-ms-expand {
+      display: none; /* hide the default arrow in ie10 and ie11 */
+    }
+    & label {
+      padding-left: 8px;
       color: rgba(135, 144, 167, 0.57);
       font-family: "Roboto", sans-serif;
       font-size: 14px;
@@ -138,42 +172,8 @@ fieldset {
       line-height: 16px;
     }
   }
-  & select {
-    width: 100%;
-    height: 32px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none; /* remove default arrow */
-    background-image: url(../assets/Shape.svg);
-    background-repeat: no-repeat;
-    background-position: right 17px top 14px;
-    margin-top: 5px;
-    & option {
-      background-color: inherit;
-
-      &:hover {
-        background-color: #dbb407;
-      }
-    }
-    // @include onTablet {
-    //   width: 424px;
-    // }
-  }
-  & select::-ms-expand {
-    display: none; /* hide the default arrow in ie10 and ie11 */
-  }
-  & label {
-    padding-left: 8px;
-    color: rgba(135, 144, 167, 0.57);
-    font-family: "Roboto", sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: normal;
-    letter-spacing: 0.28px;
-    line-height: 16px;
-  }
 }
 .isActive {
-  border: 1px solid red;
+  pointer-events: none;
 }
 </style>

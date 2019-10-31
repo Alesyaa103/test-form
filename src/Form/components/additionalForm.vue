@@ -69,7 +69,8 @@ select {
   }
 }
 #delivery_info {
-  height: calc(69px + 6%);
+  height: calc(73px + 6%);
   margin-bottom: 0px;
 }
+
 </style>
