@@ -1,19 +1,9 @@
 <template>
-  <button type="button" @click="sendForm">Send</button>
+  <button type="submit">Send</button>
 </template>
 <script>
 export default {
-  name: "sendButton",
-  data() {
-    return {
-      user: ''
-    }
-  },
-  methods: {
-    sendForm() {
-      this.user = this.$store.state.user;
-    }
-  }
+  name: "sendButton"
 };
 </script>
 <style lang="scss" scoped>

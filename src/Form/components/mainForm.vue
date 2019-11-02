@@ -10,14 +10,17 @@
       @change="updateInfo"
 
     />
-    <input
-      type="text"
-      placeholder="First name"
-      v-model.trim="$v.user.firstname.$model"
-      :class="{errorInput: $v.user.firstname.$error}"
-      @change="updateInfo"
-    />
-    <!-- <div class="error" v-if="!$v.user.firstname.required">Field is required</div> -->
+    <div class="input">
+        <input
+        type="text"
+        placeholder="First name"
+        v-model.trim="$v.user.firstname.$model"
+        :class="{errorInput: $v.user.firstname.$error}"
+        @change="updateInfo"
+      />
+      <div class="error" v-if="$v.user.firstname.$error">Field is required</div>
+    </div>
+    <div class="input">
     <input
       type="text"
       placeholder="Last name"
@@ -25,6 +28,9 @@
       :class="{errorInput: $v.user.lastname.$error}"
       @change="updateInfo"
     />
+    <div class="error" v-if="$v.user.lastname.$error">Field is required</div>
+    </div>
+    <div class="input">
     <input
       type="email"
       placeholder="E-mail"
@@ -32,6 +38,10 @@
       :class="{errorInput: $v.user.email.$error}"
       @change="updateInfo"
     />
+    <div class="error" v-if="!$v.user.email.required && $v.user.email.$error">Field is required</div>
+    <div class="error" v-if="!$v.user.email.email && $v.user.email.$error">Field is only for e-mail</div>
+    </div>
+    <div class="input">
     <input
       type="tel"
       placeholder="Phone number"
@@ -39,6 +49,9 @@
       :class="{errorInput: $v.user.tel.$error}"
       @change="updateInfo"
     />
+    <div class="error" v-if="!$v.user.tel.required && $v.user.tel.$error">Field is required</div>
+    <div class="error" v-if="!$v.user.tel.number && $v.user.tel.$error">Field is only for number</div>
+    </div>
     <label for="shipping">Do you need delivery?</label>
     <select id="shipping" @change="formOpacity" v-model="shipping">
       <option disabled selected style="display:none;"></option>
@@ -54,8 +67,6 @@ import burger from "./burger.vue";
 import {
   required,
   email,
-  minLength,
-  maxLength,
   numeric
 } from "vuelidate/lib/validators";
 
@@ -67,7 +78,7 @@ export default {
   props: {
     onChangeForm: Function,
     onShipping: Function,
-    onChangeH: Function,
+    onChangeH: Function
   },
   data() {
     return {
@@ -96,8 +107,6 @@ export default {
       },
       tel: {
         required,
-        minLength: minLength(10),
-        maxLength: maxLength(10),
         numeric
       }
     }
@@ -111,7 +120,8 @@ export default {
     },
     checkHeight() {
       if (this.user.info == ''){
-        this.height = '16px'
+        this.height = '16px';
+        this.onChangeH(this.height);
       } else {
       this.height = "auto";
       this.$nextTick(() => {
@@ -121,11 +131,14 @@ export default {
       });}
     },
     updateInfo(){
+      this.$store.commit('SET_USER', this.user)
       this.$v.$touch();
       if (this.$v.$invalid) {
+        this.$store.commit('SET_STORE', false)
         return;
       }else{
-      this.$store.commit('SET_USER', this.user)}
+        this.$store.commit('SET_STORE', true)
+      }
     }
   },
   computed: {
@@ -149,11 +162,15 @@ fieldset {
     right: -24px;
     top: 0px;
     @include onTablet {
-      // bottom: -8px;
-      // right: 0px;
       position: relative;
       right: 0px;
       margin: 5px auto;
+    }
+  }
+  .input {
+    margin: 30px 0;
+    & input {
+      margin: 0;
     }
   }
 }
@@ -165,5 +182,7 @@ fieldset {
   font-weight: normal;
   letter-spacing: 0.28px;
   line-height: 16px;
+  margin: 2px;
+  padding-left: 10px;
 }
 </style>

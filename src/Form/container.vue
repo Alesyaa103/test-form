@@ -4,11 +4,13 @@
       <img src="../assets/orange.png" />
       <p>This is my test task</p>
     </header>
-    <form class="form">
-      <mainForm :onChangeForm="onChangeForm" :onShipping="onShipping" :onChangeH="onChangeH"/>
-      <additionalForm v-if="statusForm" :class="{isActive: !shipping}"  :height="currentSH"/>
+    <form class="form" @submit.prevent="submitForm">
+      <div class="fieldsets">
+        <mainForm :onChangeForm="onChangeForm" :onShipping="onShipping" :onChangeH="onChangeH" />
+        <additionalForm v-if="statusForm" :class="{isActive: !shipping}"  :height="currentSH" />
+      </div>
+      <sendButton/>
     </form>
-    <sendButton/>
   </div>
 </template>
 
@@ -45,6 +47,15 @@ export default {
     },
     onChangeH(height) {
       this.currentSH = height;
+    },
+    submitForm() {
+      if (this.$store.state.isValid){
+        if (this.ship == "No") {
+          this.user.country = "";
+          this.user.city = "";
+        }
+        this.user = this.$store.state.user
+      }
     }
   },
 
@@ -60,7 +71,10 @@ export default {
     height: 100%;
   }
 }
-
+.fieldsets {
+  display: flex;
+  justify-content: space-evenly;
+}
 .header {
   border-bottom: 2px solid #dbb407;
   height: calc(10%-20px);
@@ -88,10 +102,8 @@ export default {
 }
 
 .form {
-  display: flex;
   width: 90%;
   margin: 2% auto;
-  justify-content: space-evenly;
   position: relative;
   align-self: auto;
   @include onTablet {

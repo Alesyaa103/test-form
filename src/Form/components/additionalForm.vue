@@ -46,19 +46,12 @@ export default {
     };
   },
   props: {
-    height: String,
+    height: String
   },
   methods: {
-    // changeCourier() {
-    //   if (this.isDelivery == "Yes") {
-    //     this.ifCourier = true;
-    //   } else {
-    //     this.ifCourier = false;
-    //   }
-    // },
     updateInfo(){
       this.$store.commit('SET_USER', this.user)
-    }
+    },
   },
   computed: {
     newMargin() {
@@ -82,7 +75,7 @@ select {
   }
 }
 #delivery_info {
-  height: 95px;
+  height: 98px;
   margin-bottom: 0px;
   @include onPhone {
     height: 16px;
