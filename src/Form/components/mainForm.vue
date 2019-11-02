@@ -7,34 +7,39 @@
       ref="textarea"
       @input="checkHeight"
       :style="autoSize"
+      @change="updateInfo"
 
     />
     <input
       type="text"
       placeholder="First name"
-      v-model.trim="user.firstname"
+      v-model.trim="$v.user.firstname.$model"
       :class="{errorInput: $v.user.firstname.$error}"
+      @change="updateInfo"
     />
     <!-- <div class="error" v-if="!$v.user.firstname.required">Field is required</div> -->
     <input
       type="text"
       placeholder="Last name"
-      v-model.trim="user.lastname"
+      v-model.trim="$v.user.lastname.$model"
       :class="{errorInput: $v.user.lastname.$error}"
+      @change="updateInfo"
     />
     <input
       type="email"
       placeholder="E-mail"
-      v-model.trim="user.email"
+      v-model.trim="$v.user.email.$model"
       :class="{errorInput: $v.user.email.$error}"
+      @change="updateInfo"
     />
     <input
       type="tel"
       placeholder="Phone number"
-      v-model.trim="user.tel"
+      v-model.trim="$v.user.tel.$model"
       :class="{errorInput: $v.user.tel.$error}"
+      @change="updateInfo"
     />
-    <label for="shipping">Do you needdelivery?</label>
+    <label for="shipping">Do you need delivery?</label>
     <select id="shipping" @change="formOpacity" v-model="shipping">
       <option disabled selected style="display:none;"></option>
       <option>Yes</option>
@@ -61,7 +66,8 @@ export default {
   },
   props: {
     onChangeForm: Function,
-    onShipping: Function
+    onShipping: Function,
+    onChangeH: Function,
   },
   data() {
     return {
@@ -73,8 +79,7 @@ export default {
         info: ""
       },
       shipping: "",
-      height: "",
-      H: 0
+      height: ""
     };
   },
   validations: {
@@ -105,12 +110,22 @@ export default {
       this.onShipping(this.shipping);
     },
     checkHeight() {
+      if (this.user.info == ''){
+        this.height = '16px'
+      } else {
       this.height = "auto";
-      this.H = this.$refs.textarea.scrollHeight;
       this.$nextTick(() => {
         let newHeight = this.$refs.textarea.scrollHeight + 1;
         this.height = newHeight + "px";
-      });
+        this.onChangeH(this.height);
+      });}
+    },
+    updateInfo(){
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        return;
+      }else{
+      this.$store.commit('SET_USER', this.user)}
     }
   },
   computed: {

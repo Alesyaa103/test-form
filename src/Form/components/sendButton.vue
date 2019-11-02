@@ -1,9 +1,19 @@
 <template>
-  <button type="button">Send</button>
+  <button type="button" @click="sendForm">Send</button>
 </template>
 <script>
 export default {
-  name: "sendButton"
+  name: "sendButton",
+  data() {
+    return {
+      user: ''
+    }
+  },
+  methods: {
+    sendForm() {
+      this.user = this.$store.state.user;
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -27,7 +37,7 @@ button {
     background: linear-gradient(#e2a814, #9c630e) #f5ae00;
   }
   @include onPhone {
-    margin: 0 calc(50% - 60px);
+    margin: 10px calc(50% - 60px);
   }
 }
 </style>

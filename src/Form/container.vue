@@ -5,10 +5,10 @@
       <p>This is my test task</p>
     </header>
     <form class="form">
-      <mainForm :onChangeForm="onChangeForm" :onShipping="onShipping" />
-      <additionalForm v-if="statusForm" :class="{isActive: !shipping}" />
+      <mainForm :onChangeForm="onChangeForm" :onShipping="onShipping" :onChangeH="onChangeH"/>
+      <additionalForm v-if="statusForm" :class="{isActive: !shipping}"  :height="currentSH"/>
     </form>
-    <sendButton />
+    <sendButton/>
   </div>
 </template>
 
@@ -27,7 +27,9 @@ export default {
   data() {
     return {
       statusForm: true,
-      shipping: false
+      shipping: false,
+      currentSH: '',
+      user: {}
     };
   },
   methods: {
@@ -40,8 +42,12 @@ export default {
       } else {
         this.shipping = false;
       }
+    },
+    onChangeH(height) {
+      this.currentSH = height;
     }
-  }
+  },
+
 };
 </script>
 
@@ -85,17 +91,15 @@ export default {
   display: flex;
   width: 90%;
   margin: 2% auto;
-  justify-content: space-between;
+  justify-content: space-evenly;
   position: relative;
   align-self: auto;
-
   @include onTablet {
     display: block;
   }
 
   fieldset {
     width: 45%;
-    display: flex;
     @include onTablet {
       margin: 0 auto;
     }
@@ -106,10 +110,10 @@ export default {
     select,
     textarea {
       display: block;
-      width: 100%;
+      width: calc(100% - 24px);
       height: 16px;
       flex-direction: column;
-      margin: 6% 0;
+      margin: 30px 0;
       padding: 6px 10px;
       border: 2px solid #f0e6b8;
       background: #f6f6f6;
@@ -140,8 +144,6 @@ export default {
       }
     }
     & select {
-      width: 100%;
-      height: 16px;
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none; /* remove default arrow */
@@ -149,7 +151,7 @@ export default {
       background-repeat: no-repeat;
       background-position: right 17px top 14px;
       margin-top: 5px;
-      margin-bottom: calc(6% - 21px);
+      margin-bottom: 9px;
       & option {
         background-color: inherit;
 
