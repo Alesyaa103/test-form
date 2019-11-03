@@ -12,7 +12,7 @@ const store = new Vuex.Store({
     SET_USER: (state, user) => {
       state.user = user;
     },
-    SET_VAlID: (state, isValid) => {
+    SET_VALID: (state, isValid) => {
       state.isValid = isValid;
     }
   },

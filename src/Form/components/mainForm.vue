@@ -49,7 +49,7 @@
       :class="{errorInput: $v.user.tel.$error}"
       @change="updateInfo"
     />
-    <div class="error" v-if="!$v.user.tel.required && $v.user.tel.$error">Field is required</div>
+    <div class="error errorAd" v-if="!$v.user.tel.required && $v.user.tel.$error">Field is required</div>
     <div class="error" v-if="!$v.user.tel.number && $v.user.tel.$error">Field is only for number</div>
     </div>
     <label for="shipping">Do you need delivery?</label>
@@ -134,10 +134,10 @@ export default {
       this.$store.commit('SET_USER', this.user)
       this.$v.$touch();
       if (this.$v.$invalid) {
-        this.$store.commit('SET_STORE', false)
+        this.$store.commit('SET_VALID', false)
         return;
       }else{
-        this.$store.commit('SET_STORE', true)
+        this.$store.commit('SET_VALID', true)
       }
     }
   },
@@ -168,9 +168,13 @@ fieldset {
     }
   }
   .input {
-    margin: 30px 0;
-    & input {
-      margin: 0;
+    position: relative;
+    .error {
+      position: absolute;
+      top: 32px;
+    }
+    .errorAd {
+      top: 48px;
     }
   }
 }

@@ -55,6 +55,7 @@ export default {
           this.user.city = "";
         }
         this.user = this.$store.state.user
+        this.axios.post('http://127.0.0.1:8000/api/server/', this.user)
       }
     }
   },
@@ -74,6 +75,9 @@ export default {
 .fieldsets {
   display: flex;
   justify-content: space-evenly;
+  @include onTablet {
+    display: block;
+  }
 }
 .header {
   border-bottom: 2px solid #dbb407;
@@ -106,9 +110,6 @@ export default {
   margin: 2% auto;
   position: relative;
   align-self: auto;
-  @include onTablet {
-    display: block;
-  }
 
   fieldset {
     width: 45%;
